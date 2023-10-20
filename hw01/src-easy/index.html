@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid blue;
+            margin: 10px auto;
+            padding: 1px 3px;
+        }
+        
+    </style>
+</head>
+ 
+<body>
+    <br><br>
+    <button type="button" onclick="tableToCSV()">
+        download CSV
+    </button>
+
+    <script type="text/javascript">
+        // 创建一个二维数组来存储数据
+        function createArray(length) {
+            var arr = new Array(length || 0),
+                i = length;
+
+            if (arguments.length > 1) {
+                var args = Array.prototype.slice.call(arguments, 1);
+                while (i--) arr[length-1 - i] = createArray.apply(this, args);
+            }
+
+            return arr;
+        }
+
+        // 创建一个包含120行的数组
+        var a3 = createArray(121);
+
+        // 设置表头
+        a3[0] = ['序號', '班級', '學號', '姓名', 'GitHub', '作業一', '作業二', '作業三', '作業四', '作業五', '作業六', '作業七', '作業八', '作業九', '作業十'];
+
+        // 添加数据
+        for (var i = 1; i < a3.length; i++) {
+            a3[i] = [];
+            a3[i][0] = i;
+            
+            // 随机选择班级
+            var classOptions = ['電資四', '資工系', '資工所', '電資AI', '電資資安', '創新AI'];
+            var randomClass = classOptions[Math.floor(Math.random() * classOptions.length)];
+
+            // 生成虚设学号
+            var randomPrefix = ['111', '112'];
+            var randomMiddle = ['590', '598', 'C52', 'C53', 'C71'];
+            var randomSuffix = ('00' + Math.floor(Math.random() * 1000)).slice(-3);
+            var randomStudentID = randomPrefix[Math.floor(Math.random() * randomPrefix.length)] +
+                                 randomMiddle[Math.floor(Math.random() * randomMiddle.length)] +
+                                 randomSuffix;
+            
+            // 根据规则修改班级
+            if (randomStudentID.startsWith('111590')) {
+                randomClass = '資工四';
+            } else if (randomStudentID.startsWith('111598')) {
+                randomClass = '資工碩二';
+            } else if (randomStudentID.startsWith('111C52')) {
+                randomClass = '電資AI碩二';
+            } else if (randomStudentID.startsWith('111C53')) {
+                randomClass = '電資資安碩二';
+            } else if (randomStudentID.startsWith('111C71')) {
+                randomClass = '創新AI碩二';
+            } else if (randomStudentID.startsWith('112590')) {
+                randomClass = '資工三';
+            } else if (randomStudentID.startsWith('112598')) {
+                randomClass = '資工碩一';
+            } else if (randomStudentID.startsWith('112C52')) {
+                randomClass = '電資AI碩一';
+            } else if (randomStudentID.startsWith('112C53')) {
+                randomClass = '電資資安碩一';
+            } else if (randomStudentID.startsWith('112C71')) {
+                randomClass = '創新AI碩一';
+            }
+            
+            a3[i][1] = randomClass;
+            a3[i][2] = randomStudentID;
+
+            a3[i][3] = String.fromCharCode(Math.floor(Math.random() * 0x51ff + 0x4e00)) +
+                String.fromCharCode(Math.floor(Math.random() * 0x51ff + 0x4e00)) +
+                String.fromCharCode(Math.floor(Math.random() * 0x51ff + 0x4e00));
+            
+            a3[i][4] = (Math.random() + 1).toString(36).substring(2);
+
+            for (var j = 5; j < a3[0].length; j++) {
+                a3[i][j] = Math.floor(Math.random() * 10);
+            }
+        }
+
+        // 创建表格
+        var table = document.createElement('table');
+        for (var row of a3) {
+            table.insertRow();
+            for (var cell of row) {
+                let newCell = table.rows[table.rows.length - 1].insertCell();
+                newCell.textContent = cell;
+            }
+        }
+        document.body.appendChild(table);
+
+        function tableToCSV() {
+            var csv_data = [];
+            var rows = document.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+                var cols = rows[i].querySelectorAll('td,th');
+                var csvrow = [];
+                for (var j = 0; j < cols.length; j++) {
+                    csvrow.push(cols[j].innerHTML);
+                }
+                csv_data.push(csvrow.join(","));
+            }
+            csv_data = csv_data.join('\n');
+            downloadCSVFile(csv_data);
+        }
+
+        function downloadCSVFile(csv_data) {
+            var CSVFile = new Blob([csv_data], {
+                type: "text/csv"
+            });
+            var temp_link = document.createElement('a');
+            temp_link.download = "data.csv";
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+            temp_link.style.display = "none";
+            document.body.appendChild(temp_link);
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+    </script>
+</body>
+ 
+</html>
