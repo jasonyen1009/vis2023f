@@ -1,0 +1,14 @@
+{
+  "name": "8115f5609090ef81",
+  "main": "8115f5609090ef81@60.js",
+  "version": "60.0.0",
+  "homepage": "https://observablehq.com/d/8115f5609090ef81",
+  "author": {
+    "name": "YEN HUNG CHENG's Workspace",
+    "url": "https://observablehq.com/@yen-hung-cheng-ws"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4 - 5"
+  }
+}
