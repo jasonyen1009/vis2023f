@@ -214,10 +214,16 @@ https://www.oxxostudio.tw/articles/201501/svg-d3-13-csv.html
             .data(function (d) { return d; }).enter()
             .append("td")
             .html(function (d, i) {
-                if ( i == 4 && d != 'GitHub 帳號' ) {
-                    return '<a href="https://' + d + '.github.io/vis2023f/" target="_blank"><img src="https://' + d + '.github.io/vis2023f/hw00/me.jpg"></a>' + '<hr><a href="https://github.com/' + d + '/vis2023f/" target="_blank">' + d + '</a>';
-                }
-                else if ( i == 0 || i == 2 || isNaN(d)) {
+                // if ( i == 4 && d != 'jasonyen1009' ) {
+                //     return '<a href="https://' + d + '.github.io/vis2023f/" target="_blank"><img src="https://' + d + '.github.io/vis2023f/hw00/me.jpg"></a>' + '<hr><a href="https://github.com/' + d + '/vis2023f/" target="_blank">' + d + '</a>';
+                // }
+                // else if ( i == 0 || i == 2 || isNaN(d)) {
+                //     return d;
+                // }
+                if (i == 4 && d != 'GitHub 帳號') {
+                    const imageSource = 'https://raw.githubusercontent.com/jasonyen1009/vis2023f/main/hw00/me.jpg';
+                    return '<img src="' + imageSource + '">' + '<hr><a href="https://github.com/' + d + '/vis2023f/" target="_blank">' + d + '</a>';
+                } else if (i == 0 || i == 2 || isNaN(d)) {
                     return d;
                 }
             })
